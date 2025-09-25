@@ -2,24 +2,23 @@
 #include <stdexcept>
 #include "plant_growth.h"
 
+using namespace std;
+
 int main() {
-    try {
-        int upSpeed = 0;
-        int downSpeed = 0;
-        int desiredHeight = 0;
-        
-        // Чтение входных данных
-        std::cin >> upSpeed >> downSpeed >> desiredHeight;
-        
-        if (std::cin.fail()) {
-            throw std::invalid_argument("Некорректный ввод данных");
-        }
-        
-        simulatePlantGrowth(upSpeed, downSpeed, desiredHeight);
-        return 0;
-        
-    } catch (const std::exception& e) {
-        std::cerr << "Ошибка: " << e.what() << "\n";
+    int upSpeed, downSpeed, desiredHeight;
+    cin >> upSpeed >> downSpeed >> desiredHeight;
+    if (!cin) {
+        cerr << "Ошибка: некорректный ввод данных\n";
         return 1;
     }
+    if (upSpeed <= 0) {
+        cerr << "Ошибка: скорость роста должна быть положительной\n";
+        return 1;
+    }
+    if (downSpeed < 0 || desiredHeight < 0) {
+        cerr << "Ошибка: скорости и высота не могут быть отрицательными\n";
+        return 1;
+    }
+    simulatePlantGrowth(upSpeed, downSpeed, desiredHeight);
+    return 0;
 }
